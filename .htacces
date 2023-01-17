@@ -1,0 +1,32 @@
+Options -MultiViews
+Options -Indexes
+
+ServerSignature EMail
+SetEnv SERVER_ADMIN m.i.csitrovsky@icloud.com
+
+<files .htaccess="">
+    order allow,deny
+    deny from all
+</files>
+
+<ifmodule mod_deflate.c="">
+    <filesmatch .(js|css)$="">
+    SetOutputFilter DEFLATE
+</filesmatch>
+</ifmodule>
+
+AddDefaultCharset utf-8
+AddType application/x-httpd-php .html .htm
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+    RewriteBase /
+
+    RewriteCond %{ENV:REDIRECT_STATUS} ^$
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-l
+
+    RewriteCond %{REQUEST_URI} !.*°.*
+    RewriteRule (.*)$ index.php?request=$1 [QSA,NC,L]
+</IfModule>
